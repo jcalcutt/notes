@@ -1,0 +1,41 @@
+{% extends "base.html"%}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title%}
+Notebook
+{% endblock%}
+{% block content%}
+    <h1>
+        Welcome, {{user.username}}
+    </h1>
+<br/>
+
+<button class="note-create-btn">
+    <a href="{% url 'user_new_note' %}">
+        New Note +
+    </a>
+</button>
+
+<h3>Your notes:</h3>
+<br/>
+<ul class="notes-list">
+    {% for n in notes %}
+    <li class="notes-list-item">
+        <h4 class="note-heading">{{n.heading}}</h4>
+        <p class="note-priority"><i>(priority: {{n.priority}})</i></p>
+        <p class="note-content">{{n.comment}}<p>
+
+        {% block delete %}
+        <form class="notes-delete-note" method="post" action="{% url 'user_delete_note' n.pk %}">
+        {{form | crispy}}
+        {% csrf_token %}
+        <button class="notes-delete-btn" type="submit">Delete</button>
+        {% endblock %}
+    </form>
+    </li>
+    {% endfor %}
+</ul>
+<br/>
+<br/>
+{% endblock %}

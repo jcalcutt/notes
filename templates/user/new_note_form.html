@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+New Note
+{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'user_new_note' %}">
+        {{form | crispy}}
+        {% csrf_token %}
+        <button type="submit">Submit Note</button>
+    </form>
+{% endblock %}
